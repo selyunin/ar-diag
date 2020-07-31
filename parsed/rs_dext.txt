@@ -1,0 +1,3373 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Requirements on Diagnostic Extract Template
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Document Title Requirements on DiagnosticExtract Template
+Document Owner AUTOSAR
+
+Document Responsibility AUTOSAR
+
+Document Identification No 681
+
+Document Status published
+
+Part of AUTOSAR Standard Classic Platform
+
+Part of Standard Release R19-11
+
+Document Change History
+Date Release Changed by Description
+
+2019-11-28 R19-11
+AUTOSAR
+Release
+Management
+
+• No content changes
+• Changed Document Status from
+
+Final to published
+
+2018-10-31 4.4.0
+AUTOSAR
+Release
+Management
+
+• Editorial changes
+
+2017-12-08 4.3.1
+AUTOSAR
+Release
+Management
+
+• Editorial changes
+
+2016-11-30 4.3.0
+AUTOSAR
+Release
+Management
+
+• Add requirements for OBD
+• Add requirements for the support of
+
+Fim
+• Add requirements for the support of
+
+J1939
+• Minor corrections / clarifications /
+
+editorial changes; For details please
+refer to the ChangeDocumentation
+
+2015-07-31 4.2.2
+AUTOSAR
+Release
+Management
+
+• Minor corrections / clarifications /
+editorial changes; For details please
+refer to the ChangeDocumentation
+
+2014-10-31 4.2.1
+AUTOSAR
+Release
+Management
+
+• Initial Release.
+
+1 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Disclaimer
+
+This work (specification and/or software implementation) and the material contained in
+it, as released by AUTOSAR, is for the purpose of information only. AUTOSAR and the
+companies that have contributed to it shall not be liable for any use of the work.
+
+The material contained in this work is protected by copyright and other types of intel-
+lectual property rights. The commercial exploitation of the material contained in this
+work requires a license to such intellectual property rights.
+
+This work may be utilized or reproduced without any modification, in any form or by
+any means, for informational purposes only. For any other purpose, no part of the work
+may be utilized or reproduced, in any form or by any means, without permission in
+writing from the publisher.
+
+The work has been developed for automotive applications only. It has neither been
+developed, nor tested for non-automotive applications.
+
+The word AUTOSAR and the AUTOSAR logo are registered trademarks.
+
+2 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Table of Contents
+
+1 Introduction 7
+
+1.1 Scope of this document . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+1.2 Document Conventions . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+1.3 Guidelines . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+1.4 Requirements Tracing . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+2 Requirements 11
+
+2.1 Relation to AUTOSAR Features . . . . . . . . . . . . . . . . . . . . . . 11
+2.2 General Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+[RS_DEXT_00001] Diagnostic data exchange . . . . . . . . . . . . . . . 11
+[RS_DEXT_00044] Derivation of related ECU-C parameter . . . . . . . 12
+[RS_DEXT_00046] Variants . . . . . . . . . . . . . . . . . . . . . . . . . 12
+[RS_DEXT_00048] Diagnostic Properties that are specific for one ECU 13
+[RS_DEXT_00058] Indicate that an ECU supports ODB . . . . . . . . . 13
+[RS_DEXT_00059] Support for different protocols . . . . . . . . . . . . 14
+
+2.3 Requirements against the Support for UDS Diagnostic Services . . . . 14
+[RS_DEXT_00003] SessionControl . . . . . . . . . . . . . . . . . . . . . 14
+[RS_DEXT_00004] ECUReset . . . . . . . . . . . . . . . . . . . . . . . 14
+[RS_DEXT_00005] ClearDiagnosticInformation . . . . . . . . . . . . . . 15
+[RS_DEXT_00006] ReadDTCInformation . . . . . . . . . . . . . . . . . 15
+[RS_DEXT_00007] ReadDataByIdentifier . . . . . . . . . . . . . . . . . 15
+[RS_DEXT_00008] ReadMemoryByAddress . . . . . . . . . . . . . . . 16
+[RS_DEXT_00009] SecurityAccess . . . . . . . . . . . . . . . . . . . . . 16
+[RS_DEXT_00010] CommunicationControl . . . . . . . . . . . . . . . . 16
+[RS_DEXT_00011] ReadDataByPeriodicIdentifier . . . . . . . . . . . . . 17
+[RS_DEXT_00012] DynamicallyDefineDataIdentifier . . . . . . . . . . . 17
+[RS_DEXT_00013] WriteDataByIdentifier . . . . . . . . . . . . . . . . . 17
+[RS_DEXT_00014] IOControl . . . . . . . . . . . . . . . . . . . . . . . . 18
+[RS_DEXT_00015] RoutineControl . . . . . . . . . . . . . . . . . . . . . 18
+[RS_DEXT_00016] RequestDownload . . . . . . . . . . . . . . . . . . . 18
+[RS_DEXT_00017] RequestUpload . . . . . . . . . . . . . . . . . . . . 19
+[RS_DEXT_00018] TransferData . . . . . . . . . . . . . . . . . . . . . . 19
+[RS_DEXT_00019] RequestTransferExit . . . . . . . . . . . . . . . . . . 19
+[RS_DEXT_00020] WriteMemoryByAddress . . . . . . . . . . . . . . . 20
+[RS_DEXT_00021] ControlDTCSetting . . . . . . . . . . . . . . . . . . . 20
+[RS_DEXT_00022] ResponseOnEvent . . . . . . . . . . . . . . . . . . . 20
+[RS_DEXT_00057] RequestFileTransfer . . . . . . . . . . . . . . . . . . 21
+[RS_DEXT_00047] Custom Diagnostic Service . . . . . . . . . . . . . . 21
+[RS_DEXT_00049] Properties of individual diagnostic services . . . . . 21
+[RS_DEXT_00050] Properties of all diagnostic services of a given kind 22
+[RS_DEXT_00051] Subfunctions of Diagnostic Services . . . . . . . . . 22
+[RS_DEXT_00052] Mapping of diagnostic services to the PortProto-
+
+types of ApplicationSwComponentTypes . . . . . . . . . . . 22
+[RS_DEXT_00043] Description of data elements . . . . . . . . . . . . . 23
+
+3 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00038] Description of array data types . . . . . . . . . . . . 23
+[RS_DEXT_00039] Diagnostic Service Table . . . . . . . . . . . . . . . 24
+
+2.4 Requirements against Event Handling . . . . . . . . . . . . . . . . . . 24
+[RS_DEXT_00023] Configuration of events . . . . . . . . . . . . . . . . 24
+[RS_DEXT_00024] Configuration of DTCs . . . . . . . . . . . . . . . . . 25
+[RS_DEXT_00025] Combined Events . . . . . . . . . . . . . . . . . . . 25
+[RS_DEXT_00026] Enable Conditions . . . . . . . . . . . . . . . . . . . 25
+[RS_DEXT_00027] Storage Conditions . . . . . . . . . . . . . . . . . . 26
+[RS_DEXT_00028] Enable Condition Groups . . . . . . . . . . . . . . . 26
+[RS_DEXT_00029] Storage Condition Groups . . . . . . . . . . . . . . 27
+[RS_DEXT_00030] Assignment of Enable Condition Groups . . . . . . 27
+[RS_DEXT_00031] Assignment of Storage Condition Group . . . . . . . 27
+[RS_DEXT_00032] Configuration of Extended Data Records . . . . . . 28
+[RS_DEXT_00033] Configuration of Snapshot Records . . . . . . . . . 28
+[RS_DEXT_00034] Description of Data Identifiers . . . . . . . . . . . . 29
+[RS_DEXT_00035] Description of Dynamic Data Identifiers . . . . . . . 29
+[RS_DEXT_00036] Description of Routine Identifiers . . . . . . . . . . . 29
+[RS_DEXT_00037] Description of I/O Identifiers . . . . . . . . . . . . . 29
+[RS_DEXT_00053] Debouncing of diagnostic events . . . . . . . . . . . 30
+[RS_DEXT_00054] Operation cycles . . . . . . . . . . . . . . . . . . . . 30
+[RS_DEXT_00055] Aging . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+[RS_DEXT_00056] Indicator . . . . . . . . . . . . . . . . . . . . . . . . 31
+[RS_DEXT_00045] Textual descriptions . . . . . . . . . . . . . . . . . . 31
+[RS_DEXT_00078] Support for In Use Monitor Performance Ratio . . . 31
+
+2.5 Requirements against Sessions and Security . . . . . . . . . . . . . . 32
+[RS_DEXT_00040] Diagnostic Sessions . . . . . . . . . . . . . . . . . . 32
+[RS_DEXT_00041] Access Permissions . . . . . . . . . . . . . . . . . . 32
+[RS_DEXT_00042] Security Levels . . . . . . . . . . . . . . . . . . . . . 33
+[RS_DEXT_00079] Support for environment conditions . . . . . . . . . 33
+
+2.6 Requirements against the Support for Function Inhibition . . . . . . . . 33
+[RS_DEXT_00060] Function . . . . . . . . . . . . . . . . . . . . . . . . 33
+[RS_DEXT_00061] Relationship between functions and diagnostic events 34
+[RS_DEXT_00062] Pre-configuration of the Fim when the Dem configu-
+
+ration is not yet available . . . . . . . . . . . . . . . . . . . . 34
+[RS_DEXT_00063] Relation between functions on Fim level and
+
+software-components . . . . . . . . . . . . . . . . . . . . . . 35
+2.7 Requirements against the Support for diagnostics on J1939 . . . . . . 35
+
+[RS_DEXT_00064] Definition of an SPN . . . . . . . . . . . . . . . . . . 35
+[RS_DEXT_00065] Definition of freeze frames on J1939 . . . . . . . . . 36
+[RS_DEXT_00066] Mapping between a J1939 controller application and
+
+a software-component . . . . . . . . . . . . . . . . . . . . . . 36
+[RS_DEXT_00067] Definition of J1939 DTC . . . . . . . . . . . . . . . . 37
+
+2.8 Requirements against the Support for OBD Diagnostic Services . . . . 37
+[RS_DEXT_00068] Definition of a Diagnostic Parameter Identifier . . . . 37
+[RS_DEXT_00069] Support for OBD Mode 0x01 (RequestCurrentPow-
+
+ertrainDiagnosticData) . . . . . . . . . . . . . . . . . . . . . 37
+
+4 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00070] Support for OBD Mode 0x02 (RequestPowertrain-
+FreezeFrameData) . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+[RS_DEXT_00071] Support for OBD ModeModes 0x03 / 0x07 / 0x0A
+(RequestEmissionRelatedDiagnosticTroubleCodes) . . . . . 38
+
+[RS_DEXT_00072] Support for OBD Mode 0x04 (ClearResetEmission-
+RelatedDiagnosticInformation) . . . . . . . . . . . . . . . . . 38
+
+[RS_DEXT_00073] Support for OBD Mode 0x06 (RequestOnBoard-
+MonitoringTestResults) . . . . . . . . . . . . . . . . . . . . . 39
+
+[RS_DEXT_00074] Support for OBD Mode 0x08 (RequestControlOfOn-
+BoardDevice) . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+[RS_DEXT_00075] Support for OBD Mode 0x09 (RequestVehicleInfor-
+mation) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+[RS_DEXT_00076] Definition of Diagnostic Test Identifier . . . . . . . . 40
+[RS_DEXT_00077] Description of the utilization of UDS for supporting
+
+WWH-OBD . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+
+A History of Constraints and Specification Items 41
+
+A.1 Constraint History of this Document according to AUTOSAR R4.2.1 . . 41
+A.1.1 Added Traceables in R4.2.1 . . . . . . . . . . . . . . . . . . . 41
+A.1.2 Added Traceables in 4.2.1 . . . . . . . . . . . . . . . . . . . . 42
+A.1.3 Deleted Traceables in 4.2.1 . . . . . . . . . . . . . . . . . . . 42
+
+A.2 Constraint History of this Document according to AUTOSAR R4.2.2 . . 42
+A.2.1 Added Traceables in 4.2.2 . . . . . . . . . . . . . . . . . . . . 42
+A.2.2 Changed Traceables in 4.2.2 . . . . . . . . . . . . . . . . . . 42
+A.2.3 Deleted Traceables in 4.2.2 . . . . . . . . . . . . . . . . . . . 43
+A.2.4 Added Constraints in 4.2.2 . . . . . . . . . . . . . . . . . . . 43
+A.2.5 Changed Constraints in 4.2.2 . . . . . . . . . . . . . . . . . . 43
+A.2.6 Deleted Constraints in 4.2.2 . . . . . . . . . . . . . . . . . . 43
+
+A.3 Constraint History of this Document according to AUTOSAR R4.3.0 . . 43
+A.3.1 Added Traceables in 4.3.0 . . . . . . . . . . . . . . . . . . . . 43
+A.3.2 Changed Traceables in 4.3.0 . . . . . . . . . . . . . . . . . . 44
+A.3.3 Deleted Traceables in 4.3.0 . . . . . . . . . . . . . . . . . . . 45
+A.3.4 Added Constraints in 4.3.0 . . . . . . . . . . . . . . . . . . . 45
+A.3.5 Changed Constraints in 4.3.0 . . . . . . . . . . . . . . . . . . 45
+A.3.6 Deleted Constraints in 4.3.0 . . . . . . . . . . . . . . . . . . 45
+
+5 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+References
+
+[1] Standardization Template
+AUTOSAR_TPS_StandardizationTemplate
+
+[2] Unified diagnostic services (UDS) – Part 1: Specification and requirements (Re-
+lease 2006-12)
+http://www.iso.org
+
+[3] Specification of Diagnostic Communication Manager
+AUTOSAR_SWS_DiagnosticCommunicationManager
+
+[4] Specification of Diagnostic Event Manager
+AUTOSAR_SWS_DiagnosticEventManager
+
+[5] Motor Vehicle Pollution Control Devices
+http://www.iso.org
+
+[6] Specification of Function Inhibition Manager
+AUTOSAR_SWS_FunctionInhibitionManager
+
+[7] Road vehicles – Communication between vehicle and external equipment for
+emission-related diagnostic – Part 5: Emission-related diagnostic services.
+http://www.iso.org
+
+6 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+http://www.iso.org
+http://www.iso.org
+http://www.iso.org
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+1 Introduction
+
+1.1 Scope of this document
+
+This document collects the requirements on the Diagnostic Extract.
+
+The main goal of the Diagnostic Extract is to exchange diagnostic data between the dif-
+ferent parties involved in the diagnostic development process to support the automatic
+code generation process for diagnostic modules DCM and DEM.
+
+Further, the Diagnostic Extract is used to support the distributed development process
+for diagnostic functionality.
+
+Below, the key aspects for the usage of the Diagnostic Extract are mentioned again:
+
+• Exchange of diagnostic data for DCM and DEM
+
+• Support of distributed development for diagnostic functionality
+
+7 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+1.2 Document Conventions
+
+The representation of requirements in AUTOSAR documents follows the table specified
+in [TPS_STDT_00078], see Standardization Template, chapter Support for Traceability
+([1]).
+
+The verbal forms for the expression of obligation specified in [TPS_STDT_00053] shall
+be used to indicate requirements, see Standardization Template, chapter Support for
+Traceability ([1]).
+
+8 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+1.3 Guidelines
+
+Existing specifications shall be referenced (in form of a single requirement). Differ-
+ences to these specifications are specified as additional requirements. All Require-
+ments shall have the following properties:
+
+• Redundancy
+Requirements shall not be repeated within one requirement or in other require-
+ments.
+
+• Clearness
+All requirements shall allow one possibility of interpretation only. Used technical
+terms that are not in the glossary must be defined.
+
+• Atomicity
+Each Requirement shall only contain one requirement. A Requirement is atomic
+if it cannot be split up in further requirements.
+
+• Testability
+Requirements shall be testable by analysis, review or test.
+
+• Traceability
+The source and status of a requirement shall be visible at all times.
+
+9 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+1.4 Requirements Tracing
+
+Currently no requirements tracing is provided for this document. Requirement tracing
+will be included in later revision.
+
+10 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+2 Requirements
+
+2.1 Relation to AUTOSAR Features
+
+The section describes a list of features that should be addressed by the requirements:
+
+• [RS_Main_00300] AUTOSAR shall provide data exchange formats to support
+work-share in large inter and intra-company development. groups
+
+• [RS_BRF_01112] AUTOSAR shall offer interfaces to boot loaders.
+
+• [RS_BRF_01440] AUTOSAR services shall support system diagnostic function-
+ality.
+
+This is a short selection of features and main requirements which need to be fulfilled
+by the requirements on the Diagnostic Extract.
+
+2.2 General Requirements
+
+This chapter contains a collection of general requirements that apply for all aspects of
+the Diagnostic Extract.
+
+[RS_DEXT_00001] Diagnostic data exchange d
+
+Type: valid
+
+Description: The diagnostic extract shall support the exchange of diagnostics-related
+information.
+
+Rationale:
+
+The configuration of the AUTOSAR diagnostics stack, in the vast majority of
+cases, is a joint effort with contributions from the OEM and the respective ECU
+supplier.
+
+For this purpose, the OEM and the supplier need to be able to exchange
+configuration information with as little friction as possible. In general, arbitrary
+combinations of particular OEMs and specific suppliers are possible. To make
+this work it is necessary to standardize the data exchanged between the
+affected parties to the necessary extent.
+
+Use Case:
+
+0. OEM delivers a partial configuration to a supplier that in turn is expected
+to fill in the missing pieces and/or review and (where applicable)
+overwrite configuration done by the OEM.
+
+0. Supplier feeds back reviewed diagnostics configuration to the OEM.
+
+0. Supplier delivers the final configuration of the diagnostics stack back to
+the OEM such that the latter is able to derive a tester configuration from
+this data.
+
+5
+5
+
+11 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+4
+
+0. Suppliers or OEMs use the Diagnostic Extract to exchange the
+information within the company between related responsible
+organization parts. By this means a distributed software development is
+supported within the company.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00044] Derivation of related ECU-C parameter d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the derivation of related ECU-C
+parameters for Dcm, Fim and Dem.
+
+Rationale:
+
+A concrete configuration of an AUTOSAR diagnostic stack on the level of
+ECUC is, by definition, not portable. It is very much focused on specific details
+that reflect the specific implementation of the particular diagnostic stack. This
+approach is reasonable because it allows for a deeper optimization of the
+software stack than a general and more abstract approach would support.
+
+However, the more abstract approach has other benefits in terms of being
+exchangeable across different organizations and, to some extent, even
+projects.
+
+Therefore, it is reasonable to define a general and more abstract way of
+configuring the diagnostic stack for which the ultimate goal is to derive the
+concrete and non-portable specific configuration to a large extent.
+
+Use Case:
+
+A user wants the specify configuration of the diagnostic stack in a general way
+that can be exchanged with project partners in the same way that e.g. a system
+description can be exchanged.
+
+The user wants to specify the diagnostic information on the same conceptual
+level as the system extract and the user wants to relate from the diagnostic
+configuration to elements of a system extract where applicable. Finally,
+someone wants to take this information that is described on a higher
+conceptual level and use if for the derivation of configuration information on the
+much more specific (and, consequently, less portable) level that is ECUC.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00046] Variants d
+
+12 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+Description: The Diagnostic Extract shall support variants.
+
+Rationale:
+
+AUTOSAR models in general may consist of different variants of the same
+aspect. The modeling of different variants on one end may have an impact on
+an other end, i.e. the other end also needs variants in order to properly
+implement model consistency. In other words, if the configuration of an ECU
+(e.g. in terms of a system description) has variants it is more or less likely that
+also the configuration of the diagnostic stack on the ECU needs to consider
+these variants and react accordingly.
+
+On top of that, the diagnostic extract may need to define variants out of a totally
+different motivation that is not connected to the existence of variants in the
+corresponding system description.
+
+Use Case:
+The user needs to consider existing variants in the corresponding system
+description and therefore introduce variant points that bind with the same
+expressions as the applicable variation points in the system description.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00048] Diagnostic Properties that are specific for one ECU d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of diagnostic properties that
+are specific for a given ECU.
+
+Rationale:
+Some properties differ from ECU to ECU. In case the diagnostic extract covers
+multiple ECUs at the same time it is necessary to express their diagnostic
+properties individually.
+
+Use Case:
+The user wants to specify a diagnostic extract consisting of several ECUs and
+the user wants to define certain properties individually for each of the included
+ECUs.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00058] Indicate that an ECU supports ODB d
+
+Type: valid
+
+Description:
+The diagnostic extract shall allow for the definition of whether (and how) a given
+ECU supports OBD
+
+Rationale:
+There are certain switches to be set in the downstream configuration that
+depend on the information about the OBD capabilities of a given ECU.
+
+5
+
+13 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+Use Case: The user wants to specify the applicability of OBD for a given ECU
+
+Dependencies: –
+
+Supporting
+Material:
+
+c()
+
+[RS_DEXT_00059] Support for different protocols d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of different diagnostic
+protocols (e.g. UDS, OBD, etc.) and their priority in relation to each other.
+
+Rationale:
+Different protocols shall be handled with different priorities. This requires a
+formal definition of a diagnostic protocol and its relation to further model
+elements that are already part of the diagnostic extract.
+
+Use Case:
+The user wants to define a diagnostic extract that supports different diagnostic
+protocols.
+
+Dependencies: –
+
+Supporting
+Material:
+
+c()
+
+2.3 Requirements against the Support for UDS Diagnostic Ser-
+vices
+
+This chapter contains a collection of requirements against the context of UDS diagnos-
+tic services according to [2].
+
+[RS_DEXT_00003] SessionControl d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x10
+(SessionControl).
+
+Rationale:
+The usage of different diagnostic sessions is very common and therefore
+needs to be supported by the Diagnostic Extract Template.
+
+Use Case: Support the switching from one diagnostic session to another.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00004] ECUReset d
+
+14 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x11
+(ECUReset).
+
+Rationale: The ability to reset the server is crucial for conducing a diagnostic session.
+
+Use Case: The user wants to reset the connected server.
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00005] ClearDiagnosticInformation d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x14
+(ClearDiagnosticInformation).
+
+Rationale:
+The service allows for clearing the diagnostic memory of a server. This is a
+frequently used functionality.
+
+Use Case: The user wants to clear diagnostic memory on the connected server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00006] ReadDTCInformation d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x19
+(ReadDTCInformation).
+
+Rationale:
+The service allows for accessing the status of a diagnostic trouble code on the
+server. This is a frequently used functionality.
+
+Use Case: The user wants to access DTC information via a tester on the server.
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00007] ReadDataByIdentifier d
+
+15 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x22
+(ReadDataByIdentifier).
+
+Rationale:
+The service allows for reading values on the server according to the definition
+of a given data identifier. This is a frequently used functionality.
+
+Use Case:
+The user wants to read the values associated with a given data identifier from
+the server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00008] ReadMemoryByAddress d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x23
+(ReadMemoryByAddress).
+
+Rationale:
+The service allows for accessing the content of a piece of memory on the
+server. This is a frequently used functionality.
+
+Use Case: The user wants to read memory content from the diagnostic server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00009] SecurityAccess d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x27
+(SecurityAccess).
+
+Rationale:
+This service allows for data and diagnostic services for which specific security
+restrictions apply.
+
+Use Case:
+The application of security restrictions limits the access to data and diagnostic
+services to authorized personnel. The restriction may be applied for safety
+and/or security reasons.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00010] CommunicationControl d
+
+16 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x28
+(CommunicationControl).
+
+Rationale:
+This service allows for switching on and off the communication of certain
+messages (e.g. application-related communication).
+
+Use Case: The user wants to switch off normal communication messages.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00011] ReadDataByPeriodicIdentifier d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x2A
+(ReadDataByPeriodicIdentifier).
+
+Rationale:
+The service allows for requesting the periodic transmission of diagnostic data
+by the server according to the definition of a periodic data identifier.
+
+Use Case:
+The user wants to get access to diagnostic data that is transmitted periodically
+without the necessity to request each transmission individually.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00012] DynamicallyDefineDataIdentifier d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x2C
+(DynamicallyDefineDataIdentifier).
+
+Rationale:
+The service allows for the ad-hoc definition of a data identifier that can then be
+accessed by the respective diagnostic services.
+
+Use Case:
+In contrast to the case where data identifiers are defined in advance of a
+diagnostic session, this service allows for defining data identifiers while a
+diagnostic session is ongoing.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00013] WriteDataByIdentifier d
+
+17 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x2E
+(WriteDataByIdentifier).
+
+Rationale:
+The service allows for transmitting diagnostic data identified by the association
+with a diagnostic data identifier to a diagnostic server. This is a frequently used
+functionality.
+
+Use Case:
+The user wants to transmit data associated with a given data identifier to the
+diagnostic server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00014] IOControl d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x2F
+(IOControl).
+
+Rationale:
+The service allows for substituting values of the I/O layer with values provided
+by the diagnostic tester.
+
+Use Case:
+The user wants to bypass a sensor and feeds substitution values instead. The
+user wants to substitute values provided to a given actuator.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00015] RoutineControl d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x31
+(RoutineControl).
+
+Rationale: The service can be used to execute specific code on the server according.
+
+Use Case:
+The user wants to execute code on the remote server in order to achieve a
+given functionality that goes beyond the capabilities provided by any of the
+“simple” data exchange services.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00016] RequestDownload d
+
+18 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x34
+(RequestDownload).
+
+Rationale:
+This service has the ability to request the server to accept the transfer of a
+piece of data from the client (e.g. tester) to the server. Support for this service
+is the prerequisite for a support of the service described in [RS_DEXT_00018].
+
+Use Case:
+The user wants to transmit a piece of (mostly complex) data from the client to
+the server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00017] RequestUpload d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x35
+(RequestUpload).
+
+Rationale:
+This service has the ability to request the server to accept the transfer of a
+piece of data from the server to a client (e.g. tester). Support for this service is
+the prerequisite for a support of the service described in [RS_DEXT_00018].
+
+Use Case:
+The user wants to transmit a piece of (mostly complex) data from the server to
+the client.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00018] TransferData d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x36
+(TransferData).
+
+Rationale:
+This service is used to actually execute a data transfer between client and
+server.
+
+Use Case:
+The user wants to transmit a piece of (mostly complex) data between client and
+server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00019] RequestTransferExit d
+
+19 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x37
+(RequestTransferExit).
+
+Rationale:
+The service can be taken to request the termination of a data transmission
+between server and client (independent of the direction of the data
+transmission).
+
+Use Case: The user wants to actively end a data transmission between client and server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00020] WriteMemoryByAddress d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x3D
+(WriteMemoryByAddress).
+
+Rationale: The service can be used to write a piece of data to the server’s memory.
+
+Use Case: The user wants to overwrite the values in a given piece of server memory.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00021] ControlDTCSetting d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x85
+(ControlDTCSetting).
+
+Rationale:
+The service can be used to control the updating of status bits of diagnostic
+trouble codes in the server.
+
+Use Case:
+The user wants to either stop or resume the updating of status bits of
+diagnostic trouble codes in the server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00022] ResponseOnEvent d
+
+20 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x86
+(ResponseOnEvent).
+
+Rationale:
+The service can be used to control the behavior of the server with respect to
+the transmission of data in response to a given event.
+
+Use Case:
+The user wants to control the behavior of the server in terms of how the server
+sends response messages according to the existence of a given event.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00057] RequestFileTransfer d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of UDS service 0x38
+(RequestFileTransfer).
+
+Rationale:
+The service RequestFileTransfer is part of the subset of UDS services
+supported by the Diagnostic Extract.
+
+Use Case: The user wants to specify a file transfer to/from the server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00047] Custom Diagnostic Service d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of custom diagnostic
+services.
+
+Rationale:
+In some cases diagnostic services beyond the set of services standardized in
+ISO14229 are needed.
+
+Use Case:
+The user wants to execute a diagnostic functionality that is not part of the
+specification of ISO 14229 [2]
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00049] Properties of individual diagnostic services d
+
+21 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of properties that are specific
+for a given diagnostic service.
+
+Rationale:
+Some properties of diagnostic services need to be individually fine-tuned for
+every instance of a given class of diagnostic service, e.g. ReadDataByIdentifier.
+
+Use Case:
+The user wants to define specific properties differently for all instances of a
+given diagnostic service.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00050] Properties of all diagnostic services of a given kind d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of properties that are
+common for all instances of a kind of diagnostic service.
+
+Rationale:
+
+Some properties of diagnostic services are common for all instances of the
+specific diagnostic service. If these were specifiable on an individual basis
+there would be potential for inconsistencies in the specification of different
+instances of the diagnostic service.
+
+Use Case:
+The user wants to define specific properties that are shared among all
+instances of a given diagnostic service.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00051] Subfunctions of Diagnostic Services d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of subfunctions of diagnostic
+services.
+
+Rationale:
+The definition of subfunctions is an important part of the definition of diagnostic
+services. Also, the existence of subfunctions for certain diagnostic services is
+regulated by the applicable ISO 14229-1 [2].
+
+Use Case: The user wants to specify subfunctions for given diagnostic services.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00052] Mapping of diagnostic services to the PortPrototypes of ApplicationSwComponentTypes d
+
+22 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the specification of how diagnostic
+services are mapped to the PortPrototypes of ApplicationSwComponentTypes
+
+Rationale:
+
+The mapping of diagnostic services to the the PortPrototypes of
+ApplicationSwComponentTypes connects the definition of diagnostic services
+with the actual application software that these services are about. Therefore,
+this mapping is an important step in the workflow and also provides essential
+information for the integration of the software on a given ECU.
+
+Use Case:
+The user wants to map diagnostic services to application software in order to
+express the conceptual connection between these two aspects of the ECU
+configuration.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00043] Description of data elements d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the description of data elements for
+diagnostic services.
+
+Rationale:
+
+Data elements represent a formal specification of the content of diagnostic
+messages exchanged between a client and a server. The formal definition of
+the elements of the messages allows for a clearer idea of what is actually
+exchanged. Plus, it is possible to check the consistency of data elements
+defined in the diagnostic extract to data elements in the application software to
+which the diagnostic service is finally connected to.
+
+Use Case:
+The user wants to create a fine-grained model of the content of diagnostic
+messages exchanged between client and server.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00038] Description of array data types d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the usage of array data types for the DID
+sender/receiver interaction between the Dcm and application software.
+
+Rationale:
+
+Array data types are a commonly used case in AUTOSAR application software.
+Consequently, the AUTOSAR diagnostic stack and, by extension, the
+Diagnostic Extract needs to support this case for the interaction between the
+Dcm and application software.
+
+5
+
+23 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+
+Use Case:
+The user wants to access an array data type in a PortPrototype of the
+application to be used in the description of diagnostic content (e.g. the
+definition of a Diagnostic Data Identifier).
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+[RS_DEXT_00039] Diagnostic Service Table d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the capability to specify a Diagnostic
+Service Table.
+
+Rationale:
+
+The Diagnostic Service Table represents the amount of services necessary for
+the applicable Diagnostic Protocol. The service table is a central aspect of the
+configuration of the diagnostic stack and shall therefore be supported by the
+Diagnostic Extract.
+
+Use Case:
+The user wants to define a specific Diagnostic protocol in the context of a
+project. As far as the Diagnostic Extract is concerned, this requires the
+definition of a Diagnostic Service Table.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+2.4 Requirements against Event Handling
+
+This chapter contains a collection of requirements against the general context of diag-
+nostic events and diagnostic trouble codes.
+
+[RS_DEXT_00023] Configuration of events d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the configuration of diagnostic events.
+
+Rationale:
+
+The definition of diagnostic events is key for the configuration of the AUTOSAR
+Dem. Diagnostic events are rich with additional information that needs to be
+provided as part of the definition of the diagnostic event. Furthermore,
+diagnostic events have relations to other entities that also need to be expressed
+as part of the diagnostic extract.
+
+5
+
+24 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+
+Use Case:
+The user wants to formally define the result of a diagnostic monitor. This is a
+typical task of (but not restricted to) the supplier’s workflow.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00024] Configuration of DTCs d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the configuration of DTCs.
+
+Rationale:
+
+The diagnostic stack foresees the existence of entities called diagnostic trouble
+codes (DTC) that, from a simplified point of view, represent reportable incidents
+towards a diagnostic tester. In reality, a DTC has more complex features that
+need to be supported by the diagnostic extract as well.
+
+Use Case:
+The user wants too define a unique identifier that represents a given fault
+situation, which in turn can be reported to a diagnostic tester.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00025] Combined Events d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of events mapping to a
+single DTC.
+
+Rationale:
+
+There are cases where the results of several diagnostic monitors contribute to a
+single diagnostic trouble code. For this purpose the diagnostic extract needs to
+be able to allow for an n:1 relationship between the model elements for
+diagnostic events and diagnostic trouble codes.
+
+Use Case:
+The user wants to wire the results of several diagnostic monitors to a single
+diagnostic trouble code.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00026] Enable Conditions d
+
+25 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the configuration of Enable Conditions.
+
+Rationale:
+
+AUTOSAR foresees the existence of conditions that govern the processing of a
+diagnostic event. It shall be possible to define conditions that control how
+specific diagnostic events are enabled (i.e. will be processed) or disabled (i.e.
+processing will be blocked).
+
+Use Case:
+The user wants to define a diagnostic enable condition that impacts the
+processing of diagnostic events.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00027] Storage Conditions d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the configuration of Storage Conditions.
+
+Rationale:
+
+AUTOSAR foresees the existence of conditions that control whether or not a
+diagnostic event is stored in event memory. These conditions are part of the
+configuration of the diagnostic stack. It is therefore necessary to also be able to
+define storage conditions in the diagnostic extract.
+
+Use Case:
+The user wants to define storage conditions for a given event. These storage
+conditions shall later be taken to derive the configuration of the AUTOSAR
+diagnostic stack.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00028] Enable Condition Groups d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the collection of Enable Conditions by
+means of Enable Condition Groups.
+
+Rationale:
+
+The definition of an Enable Condition Group facilitates the handling of Enable
+Conditions in general. This applies in particular for Diagnostic Events that
+depend on a shared collection of enable conditions. It is therefore required that
+the Diagnostic Extract supports the definition of Enable Condition Groups that
+can later be taken to contribute to the configuration of the AUTOSAR diagnostic
+stack.
+
+Use Case:
+The user wants to group several Diagnostic Enable Conditions to a single
+Enable Condition Group that can then be used to express the relation of given
+Diagnostic Events to the definition of Enable Conditions in a single step.
+
+5
+
+26 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00029] Storage Condition Groups d
+
+Type: valid
+
+Description:
+he Diagnostic Extract shall support the collection of Storage Conditions by
+means of Storage Condition Groups.
+
+Rationale:
+
+The definition of an Storage Condition Group facilitates the handling of Storage
+Conditions in general. This applies in particular for Diagnostic Events that
+depend on a shared collection of Storage conditions. It is therefore required
+that the Diagnostic Extract supports the definition of Storage Condition Groups
+that can later be taken to contribute to the configuration of the AUTOSAR
+diagnostic stack.
+
+Use Case:
+The user wants to group several Diagnostic Storage Conditions to a single
+Storage Condition Group that can then be used to express the relation of given
+Diagnostic Events to the definition of Storage Conditions in a single step.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00030] Assignment of Enable Condition Groups d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the assignment of Enable Condition
+Groups to an event.
+
+Rationale:
+A consequence of the existence of Diagnostic Enable Condition and Enable
+Condition Groups is that it should be possible to establish a relation of one with
+the other.
+
+Use Case:
+The user wants to collect several Diagnostic Enable Conditions in the context of
+one Enable Condition Group. This way, the configuration of the relation of
+Diagnostic Events to Enable Conditions can be significantly facilitated.
+
+Dependencies: [RS_DEXT_00028]
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00031] Assignment of Storage Condition Group d
+
+27 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the assignment of Storage Condition
+Groups to an event.
+
+Rationale:
+A consequence of the existence of Diagnostic Storage Condition and Storage
+Condition Groups is that it should be possible to establish a relation of one with
+the other.
+
+Use Case:
+The user wants to collect several Diagnostic Storage Conditions in the context
+of one Storage Condition Group. This way, the configuration of the relation of
+Diagnostic Events to Storage Conditions can be significantly facilitated.
+
+Dependencies: [RS_DEXT_00029]
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00032] Configuration of Extended Data Records d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the configuration of Extended Data
+Records.
+
+Rationale:
+Extended Data Records, like Freeze Frames, are used to store additional
+information related to a Diagnostic Event and shall therefore also be supported
+by the Diagnostic Extract.
+
+Use Case:
+The user wants to define additional information to be stored along with a given
+Diagnostic Event in event memory.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00033] Configuration of Snapshot Records d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the configuration of Snapshot Records
+(Freeze Frames).
+
+Rationale:
+Freeze Frames, like Extended Data Records, are used to store additional
+information related to a Diagnostic Event and shall therefore also be supported
+by the Diagnostic Extract.
+
+Use Case:
+The user wants to define the content of a Freeze frame to be stored along with
+a given Diagnostic Event in event memory.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+28 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00034] Description of Data Identifiers d
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the description of Data Identifiers for
+Diagnostic Services.
+
+Rationale:
+The definition of Data Identifiers is a central part of the configuration of the
+AUTOSAR diagnostic stack.
+
+Use Case: The user wants to define a Diagnostic Data Identifier with a given content.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+[RS_DEXT_00035] Description of Dynamic Data Identifiers d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the description of Dynamic Data Identifiers
+for Diagnostic Services.
+
+Rationale:
+The definition of Dynamic Data Identifiers is a central part of the configuration
+of the AUTOSAR diagnostic stack.
+
+Use Case:
+The user wants to specify that a Diagnostic Data Identifier can be used as a
+Diagnostic Dynamic Data Identifier.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+[RS_DEXT_00036] Description of Routine Identifiers d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the description of Routine Identifiers for
+Diagnostic Services.
+
+Rationale:
+The definition of Routine Identifiers is a central part of the configuration of the
+AUTOSAR diagnostic stack.
+
+Use Case:
+The user wants to define a Routine Identifier associated with a given Diagnostic
+Routine. This typically extend to the modeling of the Diagnostic Routine itself.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+[RS_DEXT_00037] Description of I/O Identifiers d
+
+29 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the description of I/O Identifiers for
+Diagnostic Services.
+
+Rationale:
+The definition of I/O Identifiers is a central part of the configuration of the
+AUTOSAR diagnostic stack.
+
+Use Case:
+The user wants to define an I/O Identifier. This typically extends to the
+modeling of the Diagnostic Data Identifier.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+[RS_DEXT_00053] Debouncing of diagnostic events d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the specification of how Diagnostic Events
+shall be debounced.
+
+Rationale:
+Typically, a debouncing algorithm (as defined by the SWS Dem) is applied to
+the occurrence of Diagnostic Events in order to avoid the existence of false
+positives. This aspect shall be supported by the Diagnostic Extract as well.
+
+Use Case:
+The user wants to define how debouncing shall be applied to a given
+Diagnostic Event.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00054] Operation cycles d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the specification of operation cycles.
+
+Rationale:
+The AUTOSAR diagnostic stack supports the configuration of operation cycles.
+This aspect shall therefore be supported by the Diagnostic Extract.
+
+Use Case:
+The user wants to assign a specific operation cycle to a diagnostic event
+depending on the project needs.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00055] Aging d
+
+30 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the specification of aging.
+
+Rationale:
+It is common practice that events are removed from fault memory after a certain
+succession of “passed” reports for this event. This aspect shall be supported by
+the Diagnostic Extract.
+
+Use Case:
+The user wants to specify the way in which specific Diagnostic Events shall be
+subject to aging.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00056] Indicator d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the specification of indicators.
+
+Rationale:
+The diagnostic stack is supposed to support the signaling of certain Diagnostic
+Events to the driver of a vehicle. The signaling shall be modeled as a
+diagnostic indicator.
+
+Use Case: The user wants to specify how Diagnostic Events are indicated to the driver.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Event Manager [4].
+
+c()
+
+[RS_DEXT_00045] Textual descriptions d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the capability to specify textual
+descriptions for Diagnostic Events and DTC attributes.
+
+Rationale:
+The ability to attach textual descriptions to the definition of diagnostic model
+elements allows for a better transport of knowledge about the purpose and the
+semantics of the respective model elements.
+
+Use Case:
+The user wants to provide a proper textual documentation of specific model
+elements related to the description of a Diagnostic Extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00078] Support for In Use Monitor Performance Ratio d
+
+31 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of In Use Monitor
+Performance Ratio (IUMPR).
+
+Rationale: The definition of IUMPR is an integral part of the application of OBD.
+
+Use Case: The user wants to specify the IUMPR with respect to given diagnostic events.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this aspect can be found in the respective law
+publication [5].
+
+c()
+
+2.5 Requirements against Sessions and Security
+
+This chapter contains a collection of requirements against the context of diagnostic
+sessions and security.
+
+[RS_DEXT_00040] Diagnostic Sessions d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the capability to specify Diagnostic
+Sessions.
+
+Rationale:
+The configuration of Diagnostic Sessions represents an important angle of the
+configuration of the AUTOSAR diagnostic stack. Therefore, the Diagnostic
+Extract needs to support the modeling of this aspect.
+
+Use Case: The user wants to define Diagnostic Sessions as part of a project.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00041] Access Permissions d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the capability to specify Access
+Permissions.
+
+Rationale:
+The configuration of Access Permissions represents an important angle of the
+configuration of the AUTOSAR diagnostic stack. Therefore, the Diagnostic
+Extract needs to support the modeling of this aspect.
+
+Use Case:
+The user wants to define specific diagnostic functionality, e.g. DIDs or RIDs that
+require Access Permissions as part of a project.
+
+5
+
+32 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00042] Security Levels d
+
+Type: valid
+
+Description: The Diagnostic Extract shall support the capability to specify Security Levels.
+
+Rationale:
+The configuration of Security Levels represents an important angle of the
+configuration of the AUTOSAR diagnostic stack. Therefore, the Diagnostic
+Extract needs to support the modeling of this aspect.
+
+Use Case: The user wants to define Security Levels as part of a project.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [2].
+
+c()
+
+[RS_DEXT_00079] Support for environment conditions d
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the formulation of environment conditions
+that enable the processing of diagnostic functionality.
+
+Rationale:
+Some diagnostic functionalities are only safe if the vehicle is in a certain state.
+Therefore, it should be possible to specify the conditions for executing
+diagnostic functionalities on the level of the diagnostic extract.
+
+Use Case:
+The user wants to execute a diagnostic functionality that requires the vehicle to
+be stopped (i.e. the condition is that vehicle speed == 0).
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Diagnostic
+Communication Manager [3].
+
+c()
+
+2.6 Requirements against the Support for Function Inhibition
+
+This chapter contains a collection of requirements against the support for function in-
+hibition in the diagnostic extract.
+
+[RS_DEXT_00060] Function d
+
+33 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The Diagnostic Extract shall support the definition of a function for the purpose
+of function inhibition. The function shall have an identification by which it can be
+identified further downstream the configuration.
+
+Rationale:
+In order to be able to define function inhibition, it is essential to have model
+elements that represent a function.
+
+Use Case:
+The user wants to specify a function that can then be used in the scope of
+function inhibition.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Function
+Inhibition Manager [6].
+
+c()
+
+[RS_DEXT_00061] Relationship between functions and diagnostic events d
+
+Type: valid
+
+Description:
+
+The Diagnostic Extract shall support the relationship between a function and
+the diagnostic events that are no longer reported if the respective function is
+inhibited.
+
+It shall be possible to express the relationship between a function and the
+corresponding events on different levels of granularity. This means that it shall
+be possible to refer to single diagnostic events as well as to an entire collection
+of diagnostic events.
+
+Rationale:
+The disabling of reporting of diagnostic events is a core functionality of the Fim.
+It shall be possible to describe this aspect in the diagnostic extract
+
+Use Case:
+
+The user wants to specify how a specific function inhibits the reporting of a
+given collection of diagnostic events. Instead of having to refer to every single
+intended diagnostic event the user wants to have the ability to shortcut this
+effort by referring to a group of events formalized by means of the diagnostic
+extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Function
+Inhibition Manager [6].
+
+c()
+
+[RS_DEXT_00062] Pre-configuration of the Fim when the Dem configuration is
+not yet available d
+
+Type: valid
+5
+
+34 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+
+Description:
+
+At the point in time when the configuration of the Fim in the diagnostic extract is
+created it may be possible that the configuration of the Dem in the diagnostic
+extract does not exist yet.
+
+Therefore, there are no formalized representation of diagnostic events available
+that could be taken for the creation of the Fim’s pre-configuration.
+
+Therefore, the diagnostic extract shall provide the ability to define placeholders
+for diagnostic events that can be used in the pre-configuration of the Fim and
+later be replaced by the real diagnostic events when the Dem configuration in
+the diagnostic extract becomes available.
+
+Rationale:
+The concept of a decentralized configuration supports the idea the certain parts
+of the diagnostic extract shall be defined independently from each other and
+then later merged to form the configuration of an entire diagnostic stack.
+
+Use Case:
+The user wants to model the relation between functions and diagnostic events
+before the definition of the actual diagnostic events is available.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Function
+Inhibition Manager [6].
+
+c()
+
+[RS_DEXT_00063] Relation between functions on Fim level and software-
+components d
+
+Type: valid
+
+Description:
+The diagnostic extract shall provide means to define the mapping of a function
+to a software-component.
+
+Rationale:
+The concept of a function with in the Fim is quite abstract and needs further
+clarification as to which part of the application software on an AUTOSAR ECU
+actually corresponds to it.
+
+Use Case:
+The user wants to specify which function in terms of the Fim is represented by
+which part of the application software.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information can be found in the specification of the AUTOSAR Function
+Inhibition Manager [6].
+
+c()
+
+2.7 Requirements against the Support for diagnostics on J1939
+
+This chapter contains a collection of requirements against the support for diagnostics
+on J1939 in the diagnostic extract.
+
+[RS_DEXT_00064] Definition of an SPN d
+
+35 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of an SPN as well as the
+representation of a communication item in the system description along with its
+physical properties.
+
+Rationale:
+The so-called Suspect Parameter Number (SPN) is a prominent concept inside
+J1939 diagnostics. The SPN can also refer to physical properties.
+
+Use Case:
+
+The user wants to specify a J1939 SPN by means of the diagnostic extract.
+The user wants to specify how the SPN is represented in the system
+description. The user wants to make sure that the intended physical properties
+are available in the system description.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00065] Definition of freeze frames on J1939 d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of freeze frames (both regular
+and expanded) on J1939
+
+Rationale:
+The definition of freeze frames on J1939 is an important part of the
+configuration of a J1939 diagnostics stack.
+
+Use Case: The user wants to define the content of J1939 freeze frames.
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00066] Mapping between a J1939 controller application and a
+software-component d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the specification of the mapping between
+the concept of a J1939 controller application and a part of the AUTOSAR
+application software represented by a single software-component.
+
+Rationale:
+
+The mapping between controller applications and software-component is an
+important part of “bridging the gap” between the technical domains of
+AUTOSAR and J1939. The different approaches to the definition of a functional
+unit shall be mapped onto each other.
+
+Use Case:
+The user wants to specify the mapping between a controller application and a
+part of the AUTOSAR application software.
+
+Dependencies: –
+5
+
+36 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+4
+Supporting
+Material:
+
+–
+
+c()
+
+[RS_DEXT_00067] Definition of J1939 DTC d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of a DTC in the domain of
+J1939 with all its specific properties.
+
+Rationale:
+The definition of a DTC is an important part of a diagnostic stack. The DTCs in
+the J1939 domain have specific properties that are clearly separate from the
+properties of e.g. UDS DTCs.
+
+Use Case:
+The user wants to specify a DTC within the configuration of the J1939
+diagnostic stack in the diagnostic extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+2.8 Requirements against the Support for OBD Diagnostic Ser-
+vices
+
+This chapter contains a collection of requirements against the context of OBD diagnos-
+tic services according to [7].
+
+[RS_DEXT_00068] Definition of a Diagnostic Parameter Identifier d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the formal definition of diagnostic
+parameter identifiers (PID). The formal representation of the PID shall have a
+numerical identifier that shall be used for downstream configuration.
+
+Rationale:
+A PID plays a central role in the modeling of OBD services. The definition of
+PIDs is key for the support of OBD services.
+
+Use Case: The user wants to define a PID in order to model OBD services.
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00069] Support for OBD Mode 0x01 (RequestCurrentPowertrainDiag-
+nosticData) d
+
+37 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x01, a.k.a.
+RequestCurrentPowertrainDiagnosticData.
+
+Rationale:
+The OBD mode 0x01 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x01 in the diagnostic extract.
+
+Dependencies: [RS_DEXT_00068]
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00070] Support for OBD Mode 0x02 (RequestPowertrainFreeze-
+FrameData) d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x02, a.k.a.
+RequestPowertrainFreezeFrameData.
+
+Rationale:
+The OBD mode 0x02 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x02 in the diagnostic extract.
+
+Dependencies: [RS_DEXT_00068]
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00071] Support for OBD ModeModes 0x03 / 0x07 / 0x0A (RequestE-
+missionRelatedDiagnosticTroubleCodes) d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x03 / 0x07
+/ 0x0A, a.k.a. RequestEmissionRelatedDiagnosticTroubleCodes.
+
+Rationale:
+The OBD modes 0x03 / 0x07 / 0x0A are mandatory parts of the OBD
+functionality and therefore a representation of this mode is required in the
+diagnostic extract.
+
+Use Case:
+The user wants to model the OBD services 0x03 / 0x07 / 0x0A in the diagnostic
+extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00072] Support for OBD Mode 0x04 (ClearResetEmissionRelatedDi-
+agnosticInformation) d
+
+38 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x04, a.k.a.
+ClearResetEmissionRelatedDiagnosticInformation.
+
+Rationale:
+The OBD mode 0x04 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x04 in the diagnostic extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00073] Support for OBD Mode 0x06 (RequestOnBoardMonitor-
+ingTestResults) d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x06, a.k.a.
+RequestOnBoardMonitoringTestResults.
+
+Rationale:
+The OBD mode 0x06 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x06 in the diagnostic extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00074] Support for OBD Mode 0x08 (RequestControlOfOnBoardDe-
+vice) d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x08, a.k.a.
+RequestControlOfOnBoardDevice.
+
+Rationale:
+The OBD mode 0x08 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x08 in the diagnostic extract.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00075] Support for OBD Mode 0x09 (RequestVehicleInformation) d
+
+39 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the modeling of the OBD mode 0x09, a.k.a.
+RequestVehicleInformation.
+
+Rationale:
+The OBD mode 0x09 is a mandatory part of the OBD functionality and
+therefore a representation of this mode is required in the diagnostic extract.
+
+Use Case: The user wants to model the OBD service 0x09 in the diagnostic extract.
+
+Dependencies: [RS_DEXT_00076]
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00076] Definition of Diagnostic Test Identifier d
+
+Type: valid
+
+Description:
+The diagnostic extract shall support the definition of a Diagnostic Test Identifier
+(TID)
+
+Rationale: The definition of a TID is required for the definition of the OBD model 0x09.
+
+Use Case:
+The user wants to define a TID that later shall be used in the definition of the
+OBD service 0x09.
+
+Dependencies: –
+
+Supporting
+Material:
+
+More information about this diagnostic service can be found in the respective
+ISO specification [7].
+
+c()
+
+[RS_DEXT_00077] Description of the utilization of UDS for supporting WWH-OBD
+d
+
+Type: valid
+
+Description:
+The diagnostic extract shall specify how the UDS diagnostic services shall be
+utilized in order to implement WWH-OBD.
+
+Rationale:
+
+The implementation of WWH-OBD basically means to use UDS services to
+emulate the behavior of OBD services. In order to harmonize the usage of UDS
+services for this purpose the diagnostic extract shall provide a specification that
+eliminates ambiguous configuration variants as good as possible.
+
+Use Case:
+
+The user wants to utilize WWH-OBD on an ECU that in general supports the
+UDS diagnostic services. The user wants to take advantage of specifications
+that clarify how UDS services shall be configured in the diagnostic extract for
+this purpose.
+
+Dependencies: –
+
+Supporting
+Material:
+
+–
+
+c()
+
+40 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+A History of Constraints and Specification Items
+
+A.1 Constraint History of this Document according to AUTOSAR
+R4.2.1
+
+A.1.1 Added Traceables in R4.2.1
+
+Id Heading
+[RS_DEXT_00001] Diagnostic Data Exchange
+[RS_DEXT_00002] Distributed software development process
+[RS_DEXT_00003] SessionControl
+[RS_DEXT_00004] ECUReset
+[RS_DEXT_00005] ClearDiagnosticInformation
+[RS_DEXT_00006] ReadDTCInformation
+[RS_DEXT_00007] ReadDataByIdentifier
+[RS_DEXT_00008] ReadMemoryByAddress
+[RS_DEXT_00009] SecurityAccess
+[RS_DEXT_00010] CommunicationControl
+[RS_DEXT_00011] ReadDataByPeriodicIdentifier
+[RS_DEXT_00012] DynamicallyDefineDataIdentifier
+[RS_DEXT_00013] WriteDataByIdentifier
+[RS_DEXT_00014] IOControl
+[RS_DEXT_00015] RoutineControl
+[RS_DEXT_00016] RequestDownload
+[RS_DEXT_00017] RequestUpload
+[RS_DEXT_00018] TransferData
+[RS_DEXT_00019] RequestTransferExit
+[RS_DEXT_00020] WriteMemoryByAddress
+[RS_DEXT_00021] ControlDTCSetting
+[RS_DEXT_00022] ResponseOnEvent
+[RS_DEXT_00023] Configuration of events
+[RS_DEXT_00024] Configuration of DTCs
+[RS_DEXT_00025] Combined Events
+[RS_DEXT_00026] Enable Conditions
+[RS_DEXT_00027] Storage Conditions
+[RS_DEXT_00028] Enable Condition Groups
+[RS_DEXT_00029] Storage Condition Groups
+[RS_DEXT_00030] Assignment of Enable Condition Groups
+[RS_DEXT_00031] Assignment of Storage Condition Group
+[RS_DEXT_00032] Configuration of Extended Data Records
+[RS_DEXT_00033] Configuration of Snapshot Records
+[RS_DEXT_00034] Description of Data Identifiers
+[RS_DEXT_00035] Description of Dynamic Data Identifiers
+[RS_DEXT_00036] Description of Routine Identifiers
+[RS_DEXT_00037] Description of I/O Identifiers
+[RS_DEXT_00038] Description of array data types
+[RS_DEXT_00039] Diagnostic Service Table
+[RS_DEXT_00040] Diagnostic Sessions
+[RS_DEXT_00041] Access Permissions
+[RS_DEXT_00042] Security Levels
+[RS_DEXT_00043] Description of data elements
+
+41 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00044] Derivation of related ECU-C parameter
+[RS_DEXT_00045] Textual descriptions
+[RS_DEXT_00046] Variants
+[RS_DEXT_00047] Custom Diagnostic Service
+[RS_DEXT_00048] Diagnostic Properties that are specific for one ECU
+[RS_DEXT_00049] Properties of individual diagnostic services
+[RS_DEXT_00050] Properties of all diagnostic services of a given kind
+[RS_DEXT_00051] Subfunctions of Diagnostic Services
+[RS_DEXT_00052] Mapping of diagnostic services to the PortPrototypes of ApplicationSwCom-
+
+ponentTypes
+[RS_DEXT_00053] Debouncing of diagnostic events
+[RS_DEXT_00054] Operation cycles
+[RS_DEXT_00055] Aging
+[RS_DEXT_00056] Indicator
+[RS_DEXT_00057] RequestFileTransfer
+
+Table A.1: Added Traceables in R4.2.1
+
+A.1.2 Added Traceables in 4.2.1
+
+none
+
+A.1.3 Deleted Traceables in 4.2.1
+
+none
+
+A.2 Constraint History of this Document according to AUTOSAR
+R4.2.2
+
+A.2.1 Added Traceables in 4.2.2
+
+none
+
+A.2.2 Changed Traceables in 4.2.2
+
+Id Heading
+[RS_DEXT_00003] SessionControl
+[RS_DEXT_00004] ECUReset
+[RS_DEXT_00005] ClearDiagnosticInformation
+[RS_DEXT_00006] ReadDTCInformation
+[RS_DEXT_00007] ReadDataByIdentifier
+[RS_DEXT_00008] ReadMemoryByAddress
+[RS_DEXT_00009] SecurityAccess
+[RS_DEXT_00010] CommunicationControl
+[RS_DEXT_00011] ReadDataByPeriodicIdentifier
+
+42 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00012] DynamicallyDefineDataIdentifier
+[RS_DEXT_00013] WriteDataByIdentifier
+[RS_DEXT_00014] IOControl
+[RS_DEXT_00015] RoutineControl
+[RS_DEXT_00016] RequestDownload
+[RS_DEXT_00017] RequestUpload
+[RS_DEXT_00018] TransferData
+[RS_DEXT_00019] RequestTransferExit
+[RS_DEXT_00020] WriteMemoryByAddress
+[RS_DEXT_00021] ControlDTCSetting
+[RS_DEXT_00022] ResponseOnEvent
+
+Table A.2: Changed Traceables in 4.2.2
+
+A.2.3 Deleted Traceables in 4.2.2
+
+none
+
+A.2.4 Added Constraints in 4.2.2
+
+none
+
+A.2.5 Changed Constraints in 4.2.2
+
+none
+
+A.2.6 Deleted Constraints in 4.2.2
+
+none
+
+A.3 Constraint History of this Document according to AUTOSAR
+R4.3.0
+
+A.3.1 Added Traceables in 4.3.0
+
+Id Heading
+[RS_DEXT_00058] Indicate that an ECU supports ODB
+[RS_DEXT_00059] Support for different protocols
+[RS_DEXT_00060] Function
+[RS_DEXT_00061] Relationship between functions and diagnostic events
+[RS_DEXT_00062] Pre-configuration of the Fim when the Dem configuration is not yet available
+[RS_DEXT_00063] Relation between functions on Fim level and software-components
+[RS_DEXT_00064] Definition of an SPN
+
+43 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00065] Definition of freeze frames on J1939
+[RS_DEXT_00066] Mapping between a J1939 controller application and a software-component
+[RS_DEXT_00067] Definition of J1939 DTC
+[RS_DEXT_00068] Definition of a Diagnostic Parameter Identifier
+[RS_DEXT_00069] Support for OBD Mode 0x01 (RequestCurrentPowertrainDiagnosticData)
+[RS_DEXT_00070] Support for OBD Mode 0x02 (RequestPowertrainFreezeFrameData)
+[RS_DEXT_00071] Support for OBD ModeModes 0x03 / 0x07 / 0x0A (RequestEmissionRelated-
+
+DiagnosticTroubleCodes)
+[RS_DEXT_00072] Support for OBD Mode 0x04 (ClearResetEmissionRelatedDiagnosticInforma-
+
+tion)
+[RS_DEXT_00073] Support for OBD Mode 0x06 (RequestOnBoardMonitoringTestResults)
+[RS_DEXT_00074] Support for OBD Mode 0x08 (RequestControlOfOnBoardDevice)
+[RS_DEXT_00075] Support for OBD Mode 0x09 (RequestVehicleInformation)
+[RS_DEXT_00076] Definition of Diagnostic Test Identifier
+[RS_DEXT_00077] Description of the utilization of UDS for supporting WWH-OBD
+[RS_DEXT_00078] Support for In Use Monitor Performance Ratio
+[RS_DEXT_00079] Support for environment conditions
+
+Table A.3: Added Traceables in 4.3.0
+
+A.3.2 Changed Traceables in 4.3.0
+
+Id Heading
+[RS_DEXT_00001] Diagnostic data exchange
+[RS_DEXT_00023] Configuration of events
+[RS_DEXT_00024] Configuration of DTCs
+[RS_DEXT_00025] Combined Events
+[RS_DEXT_00026] Enable Conditions
+[RS_DEXT_00027] Storage Conditions
+[RS_DEXT_00028] Enable Condition Groups
+[RS_DEXT_00029] Storage Condition Groups
+[RS_DEXT_00030] Assignment of Enable Condition Groups
+[RS_DEXT_00031] Assignment of Storage Condition Group
+[RS_DEXT_00032] Configuration of Extended Data Records
+[RS_DEXT_00033] Configuration of Snapshot Records
+[RS_DEXT_00034] Description of Data Identifiers
+[RS_DEXT_00035] Description of Dynamic Data Identifiers
+[RS_DEXT_00036] Description of Routine Identifiers
+[RS_DEXT_00037] Description of I/O Identifiers
+[RS_DEXT_00038] Description of array data types
+[RS_DEXT_00039] Diagnostic Service Table
+[RS_DEXT_00040] Diagnostic Sessions
+[RS_DEXT_00041] Access Permissions
+[RS_DEXT_00042] Security Levels
+[RS_DEXT_00043] Description of data elements
+[RS_DEXT_00044] Derivation of related ECU-C parameter
+[RS_DEXT_00045] Textual descriptions
+[RS_DEXT_00046] Variants
+[RS_DEXT_00047] Custom Diagnostic Service
+[RS_DEXT_00048] Diagnostic Properties that are specific for one ECU
+[RS_DEXT_00049] Properties of individual diagnostic services
+[RS_DEXT_00050] Properties of all diagnostic services of a given kind
+
+44 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+
+Requirements on Diagnostic Extract Template
+AUTOSAR CP R19-11
+
+[RS_DEXT_00051] Subfunctions of Diagnostic Services
+[RS_DEXT_00052] Mapping of diagnostic services to the PortPrototypes of ApplicationSwCom-
+
+ponentTypes
+[RS_DEXT_00053] Debouncing of diagnostic events
+[RS_DEXT_00054] Operation cycles
+[RS_DEXT_00055] Aging
+[RS_DEXT_00056] Indicator
+[RS_DEXT_00057] RequestFileTransfer
+
+Table A.4: Changed Traceables in 4.3.0
+
+A.3.3 Deleted Traceables in 4.3.0
+
+Id Heading
+[RS_DEXT_00002] Distributed software development process
+
+Table A.5: Deleted Traceables in 4.3.0
+
+A.3.4 Added Constraints in 4.3.0
+
+none
+
+A.3.5 Changed Constraints in 4.3.0
+
+none
+
+A.3.6 Deleted Constraints in 4.3.0
+
+none
+
+45 of 45
+— AUTOSAR CONFIDENTIAL —
+
+Document ID 681: AUTOSAR_RS_DiagnosticExtractTemplate
+
+
+	1 Introduction
+	1.1 Scope of this document
+	1.2 Document Conventions
+	1.3 Guidelines
+	1.4 Requirements Tracing
+
+	2 Requirements
+	2.1 Relation to AUTOSAR Features
+	2.2 General Requirements
+	[RS_DEXT_00001] Diagnostic data exchange
+	[RS_DEXT_00044] Derivation of related ECU-C parameter
+	[RS_DEXT_00046] Variants
+	[RS_DEXT_00048] Diagnostic Properties that are specific for one ECU
+	[RS_DEXT_00058] Indicate that an ECU supports ODB
+	[RS_DEXT_00059] Support for different protocols
+
+	2.3 Requirements against the Support for UDS Diagnostic Services
+	[RS_DEXT_00003] SessionControl
+	[RS_DEXT_00004] ECUReset
+	[RS_DEXT_00005] ClearDiagnosticInformation
+	[RS_DEXT_00006] ReadDTCInformation
+	[RS_DEXT_00007] ReadDataByIdentifier
+	[RS_DEXT_00008] ReadMemoryByAddress
+	[RS_DEXT_00009] SecurityAccess
+	[RS_DEXT_00010] CommunicationControl
+	[RS_DEXT_00011] ReadDataByPeriodicIdentifier
+	[RS_DEXT_00012] DynamicallyDefineDataIdentifier
+	[RS_DEXT_00013] WriteDataByIdentifier
+	[RS_DEXT_00014] IOControl
+	[RS_DEXT_00015] RoutineControl
+	[RS_DEXT_00016] RequestDownload
+	[RS_DEXT_00017] RequestUpload
+	[RS_DEXT_00018] TransferData
+	[RS_DEXT_00019] RequestTransferExit
+	[RS_DEXT_00020] WriteMemoryByAddress
+	[RS_DEXT_00021] ControlDTCSetting
+	[RS_DEXT_00022] ResponseOnEvent
+	[RS_DEXT_00057] RequestFileTransfer
+	[RS_DEXT_00047] Custom Diagnostic Service
+	[RS_DEXT_00049] Properties of individual diagnostic services
+	[RS_DEXT_00050] Properties of all diagnostic services of a given kind
+	[RS_DEXT_00051] Subfunctions of Diagnostic Services
+	[RS_DEXT_00052] Mapping of diagnostic services to the PortPrototypes of ApplicationSwComponentTypes
+	[RS_DEXT_00043] Description of data elements
+	[RS_DEXT_00038] Description of array data types
+	[RS_DEXT_00039] Diagnostic Service Table
+
+	2.4 Requirements against Event Handling
+	[RS_DEXT_00023] Configuration of events
+	[RS_DEXT_00024] Configuration of DTCs
+	[RS_DEXT_00025] Combined Events
+	[RS_DEXT_00026] Enable Conditions
+	[RS_DEXT_00027] Storage Conditions
+	[RS_DEXT_00028] Enable Condition Groups
+	[RS_DEXT_00029] Storage Condition Groups
+	[RS_DEXT_00030] Assignment of Enable Condition Groups
+	[RS_DEXT_00031] Assignment of Storage Condition Group
+	[RS_DEXT_00032] Configuration of Extended Data Records
+	[RS_DEXT_00033] Configuration of Snapshot Records
+	[RS_DEXT_00034] Description of Data Identifiers
+	[RS_DEXT_00035] Description of Dynamic Data Identifiers
+	[RS_DEXT_00036] Description of Routine Identifiers
+	[RS_DEXT_00037] Description of I/O Identifiers
+	[RS_DEXT_00053] Debouncing of diagnostic events
+	[RS_DEXT_00054] Operation cycles
+	[RS_DEXT_00055] Aging
+	[RS_DEXT_00056] Indicator
+	[RS_DEXT_00045] Textual descriptions
+	[RS_DEXT_00078] Support for In Use Monitor Performance Ratio
+
+	2.5 Requirements against Sessions and Security
+	[RS_DEXT_00040] Diagnostic Sessions
+	[RS_DEXT_00041] Access Permissions
+	[RS_DEXT_00042] Security Levels
+	[RS_DEXT_00079] Support for environment conditions
+
+	2.6 Requirements against the Support for Function Inhibition
+	[RS_DEXT_00060] Function
+	[RS_DEXT_00061] Relationship between functions and diagnostic events
+	[RS_DEXT_00062] Pre-configuration of the Fim when the Dem configuration is not yet available
+	[RS_DEXT_00063] Relation between functions on Fim level and software-components
+
+	2.7 Requirements against the Support for diagnostics on J1939
+	[RS_DEXT_00064] Definition of an SPN
+	[RS_DEXT_00065] Definition of freeze frames on J1939
+	[RS_DEXT_00066] Mapping between a J1939 controller application and a software-component
+	[RS_DEXT_00067] Definition of J1939 DTC
+
+	2.8 Requirements against the Support for OBD Diagnostic Services
+	[RS_DEXT_00068] Definition of a Diagnostic Parameter Identifier
+	[RS_DEXT_00069] Support for OBD Mode 0x01 (RequestCurrentPowertrainDiagnosticData)
+	[RS_DEXT_00070] Support for OBD Mode 0x02 (RequestPowertrainFreezeFrameData)
+	[RS_DEXT_00071] Support for OBD ModeModes 0x03 / 0x07 / 0x0A (RequestEmissionRelatedDiagnosticTroubleCodes)
+	[RS_DEXT_00072] Support for OBD Mode 0x04 (ClearResetEmissionRelatedDiagnosticInformation)
+	[RS_DEXT_00073] Support for OBD Mode 0x06 (RequestOnBoardMonitoringTestResults)
+	[RS_DEXT_00074] Support for OBD Mode 0x08 (RequestControlOfOnBoardDevice)
+	[RS_DEXT_00075] Support for OBD Mode 0x09 (RequestVehicleInformation)
+	[RS_DEXT_00076] Definition of Diagnostic Test Identifier
+	[RS_DEXT_00077] Description of the utilization of UDS for supporting WWH-OBD
+
+
+	A History of Constraints and Specification Items
+	A.1 Constraint History of this Document according to AUTOSAR R4.2.1
+	A.1.1 Added Traceables in R4.2.1
+	A.1.2 Added Traceables in 4.2.1
+	A.1.3 Deleted Traceables in 4.2.1
+
+	A.2 Constraint History of this Document according to AUTOSAR R4.2.2
+	A.2.1 Added Traceables in 4.2.2
+	A.2.2 Changed Traceables in 4.2.2
+	A.2.3 Deleted Traceables in 4.2.2
+	A.2.4 Added Constraints in 4.2.2
+	A.2.5 Changed Constraints in 4.2.2
+	A.2.6 Deleted Constraints in 4.2.2
+
+	A.3 Constraint History of this Document according to AUTOSAR R4.3.0
+	A.3.1 Added Traceables in 4.3.0
+	A.3.2 Changed Traceables in 4.3.0
+	A.3.3 Deleted Traceables in 4.3.0
+	A.3.4 Added Constraints in 4.3.0
+	A.3.5 Changed Constraints in 4.3.0
+	A.3.6 Deleted Constraints in 4.3.0
+
+
+
